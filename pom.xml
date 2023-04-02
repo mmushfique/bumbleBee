@@ -49,6 +49,11 @@
       <version>2.0.9</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-catalina</artifactId>
+      <version>9.0.1</version>
+    </dependency>
   </dependencies>
 
   <build>
