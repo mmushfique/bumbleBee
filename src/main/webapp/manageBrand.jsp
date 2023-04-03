@@ -83,7 +83,9 @@
                 <!------Form to search data------->
               <form class="form-inline" action="brand" method="get">
                 <div>
-                  <input type="text" placeholder="Search by brand name" name="search">
+                  <input type="hidden" name="type" value="specific"/>
+                  <input type="hidden" name ="brandName" value="${brandList[0].brandName}"/>
+                  <input type="text" placeholder="Search by brand name" name="brandName">
                   <button type="submit"><i class="fa fa-search"></i></button>
                 </div>
               </form>
@@ -98,8 +100,8 @@
 
 
                                 <%if(request.getParameter("T")!=null){ %>
-                                  <form action="brand" method="post" class="frm">
-                                    <input type="hidden" value="create"/>
+                                  <form action="brand" method="post" class="editForm">
+                                    <input type="hidden" name="type" value="register"/>
                                     <label>Enter brand name</label>
                                     <input type="text" required name="brandName"/>
                                     <button name="btnCreate" id="btnCreate" type="submit" >Create Brand</button>
@@ -110,12 +112,12 @@
                                 <!------Edit form loads here------->
                                <tag:if test="${CRUDTYPE == 'EDIT'}">
                                   <form action="brand" method="post" class="frm">
-                                  <div class="search">
                                     <input type="hidden" name="type" value="update"/>
+                                    <input type="hidden" name="id" value="${brandList[0].id}"/>
                                     <label>Edit brand name</label>
-                                    <input type="text" required name="brandName" value="${brand.brandName}"/><br>
+                                    <input type="text" required name="brandName" value="${brandList[0].brandName}"/>
                                     <button type="submit" >Update Brand </button>
-                                  </div>
+
                                   </form>
                                   <br><br><br><br>
                                </tag:if>
@@ -185,7 +187,7 @@
           <h2>Manage</h2>
           <div class="sidebar__link">
             <i class="fa fa-user-secret" aria-hidden="true"></i>
-            <a href="manageInventory">Inventory Management</a>
+            <a href="inventory">Inventory Management</a>
           </div>
           <div class="sidebar__link">
             <i class="fa fa-user-secret" aria-hidden="true"></i>
@@ -193,11 +195,19 @@
           </div>
           <div class="sidebar__link">
             <i class="fa fa-building-o"></i>
-            <a href="category">Category Management</a>
+            <a href="category">Category Management
+                <form class="form-inline" action="category" method="get">
+                    <button class="ancbutton" type="submit" style="background:lightgreen" ></button>
+                </form>
+            </a>
           </div>
           <div class="sidebar__link">
             <i class="fa fa-users" aria-hidden="true"></i>
-            <a href="brand">Brand Management</a>
+            <a href="brand">Brand Management
+                <form class="form-inline" action="brand" method="get">
+                    <button class="ancbutton" type="submit" style="background:lightgreen" ></button>
+                </form>
+            </a>
           </div>
           <h2>Information</h2>
           <div class="sidebar__link">

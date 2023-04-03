@@ -55,26 +55,26 @@ public class BrandController extends HttpServlet {
     private void registerBrand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String message="";
 
-        String brandName = request.getParameter("productName");
+        String brandName = request.getParameter("brandName");
         Brand brand = new Brand(brandName);
 
         try {
             boolean result=service.registerBrand(brand);
             if (result)
             {
-                message="The product "+brandName+" has been added sucessfully";
+                message="The brand "+brandName+" has been added sucessfully";
+                response.sendRedirect("/bumbleBee/brand");
             }
             else {
                 message="Failed to add the brand "+brandName;
+                request.setAttribute("message", message);
+                RequestDispatcher rd=request.getRequestDispatcher("manageBrand.jsp");
+                rd.forward(request, response);
             }
         } catch (ClassNotFoundException | SQLException | IOException e) {
             e.printStackTrace();
             message=e.getMessage();
         }
-
-        request.setAttribute("message", message);
-        RequestDispatcher rd=request.getRequestDispatcher("manageBrand.jsp");
-        rd.forward(request, response);
     }
 
     private void viewSpecificBrand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -128,26 +128,27 @@ public class BrandController extends HttpServlet {
     {
         String message = "";
 
+        Long id= Long.valueOf(request.getParameter("id"));
         String brandName = request.getParameter("brandName");
-        Brand brand = new Brand(brandName);
+        Brand brand = new Brand(id,brandName);
 
         try {
             boolean result = service.updateBrand(brand);
             if(result) {
                 message = "Brand has been successfully updated! Brand name: " + brand.getBrandName();
+                response.sendRedirect("/bumbleBee/brand");
             }
             else {
                 message = "Failed to update the product! Brand name: " + brand.getBrandName();
+                request.setAttribute("message", message);
+                RequestDispatcher rd = request.getRequestDispatcher("manageBrand.jsp");
+                rd.forward(request, response);
             }
 
         } catch (ClassNotFoundException | SQLException e) {
 
             message = e.getMessage();
         }
-
-        request.setAttribute("message", message);
-        RequestDispatcher rd = request.getRequestDispatcher("manageBrand.jsp");
-        rd.forward(request, response);
     }
 
     private void deleteBrand(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -161,18 +162,20 @@ public class BrandController extends HttpServlet {
 
             if(result) {
                 message = "Brand has been successfully deleted! Brand name: " + brandName;
+                response.sendRedirect("/bumbleBee/brand");
             }
             else {
                 message = "Failed to delete the product! Brand name: " + brandName;
+                request.setAttribute("message", message);
+                RequestDispatcher rd = request.getRequestDispatcher("manageBrand.jsp");
+                rd.forward(request, response);
             }
 
         } catch (ClassNotFoundException | SQLException e) {
             message = e.getMessage();
         }
 
-        request.setAttribute("message", message);
-        RequestDispatcher rd = request.getRequestDispatcher("manageBrand.jsp");
-        rd.forward(request, response);
+
 
     }
 

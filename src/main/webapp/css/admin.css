@@ -2,31 +2,38 @@
 * {
     font-family: 'Roboto', sans-serif;
 }
-.frm{
-    border: 1px solid grey;
-    padding: 10px;
-    border-radius: 10px;
-    width: fit-content;
-    margin: 20px auto;
-    /*background-color: white;*/
-    text-align: center;
-}
+.editForm {
+             display: flex;
+               flex-direction: column;
+               width: 90%;
+               margin: 50px auto;
+               padding: 20px;
+               box-shadow: 0 0 10px 0 hsl(0deg 0% 27%);
+               background-color: #fff;
+               border-radius:5px;
+            }
+            label,span {
+              margin: 0;
+              color: hsla(0, 0%, 0%, 0.678);
+            }
+
 .frm > *{
     width: 100%;
 }
-.frm .search label{
+.editForm label{
     display: flex;
     justify-content:space-between;
     align-items:center;
+    padding-bottom: 10px;
 }
-.frm input{
+.editForm input{
     background-color: transparent;
       padding: 5px 0;
       border: none;
       border-bottom: 1px solid #bbb;
       margin-left: 10px;
 }
-.frm button{
+.editForm button{
     padding: 10px 0;
     background-color:#009879;
     border:none;
