@@ -185,7 +185,7 @@
           <h2>Manage</h2>
           <div class="sidebar__link">
             <i class="fa fa-user-secret" aria-hidden="true"></i>
-            <a href="manageInventory">Inventory Management</a>
+            <a href="inventory">Inventory Management</a>
           </div>
           <div class="sidebar__link">
             <i class="fa fa-user-secret" aria-hidden="true"></i>
