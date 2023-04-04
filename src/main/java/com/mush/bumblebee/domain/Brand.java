@@ -24,6 +24,11 @@ public class Brand {
     public Brand(String brandName) {
         this.brandName = brandName;
     }
+
+    public Brand(Long id,String brandName) {
+        this.id=id;
+        this.brandName = brandName;
+    }
     public Brand() {
     }
 }
