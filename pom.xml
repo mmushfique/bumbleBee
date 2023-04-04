@@ -6,7 +6,7 @@
 
   <groupId>com.mush.bumbleBee</groupId>
   <artifactId>bumbleBee</artifactId>
-  <version>0.0.4</version>
+  <version>0.0.5</version>
   <packaging>war</packaging>
 
   <name>Bumble Bee</name>
@@ -54,6 +54,16 @@
       <artifactId>javax.servlet-api</artifactId>
       <version>4.0.1</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
     </dependency>
 
   </dependencies>

@@ -1,9 +1,7 @@
 package com.mush.bumblebee.controller;
 
 import com.mush.bumblebee.domain.Admin;
-import com.mush.bumblebee.injector.Injector;
 import com.mush.bumblebee.service.AdminService;
-import com.mush.bumblebee.service.AdminServiceImpl;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,8 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.powermock.reflect.Whitebox;
