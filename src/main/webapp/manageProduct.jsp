@@ -149,9 +149,7 @@
                                     <label>Select brand</label>
                                     <select class="form-select" name="productBrand">
                                             <option selected >${product.productBrand}</option>
-                                        <tag:forEach items="${brandList}" var="brand">
                                             <option value="${brand.id}">${brand.brandName}</option>
-                                        </tag:forEach>
                                     </select>
                                     <br>
                                     <select class="form-select" name="productCategory">
@@ -237,13 +235,17 @@
           </div>
           <div class="sidebar__link">
             <i class="fa fa-user-secret" aria-hidden="true"></i>
-            <a href="product">Product Management</a>
+                       <a href="product">Product Management
+                          <form class="form-inline" action="category" method="get">
+                              <button type="submit" style="background:lightgreen" ></button>
+                          </form>
+                      </a>
           </div>
           <div class="sidebar__link">
                       <i class="fa fa-building-o"></i>
                       <a href="category">Category Management
                           <form class="form-inline" action="category" method="get">
-                              <button class="ancbutton" type="submit" style="background:lightgreen" ></button>
+                              <button  type="submit" style="background:lightgreen" ></button>
                           </form>
                       </a>
                     </div>
@@ -251,7 +253,7 @@
                       <i class="fa fa-users" aria-hidden="true"></i>
                       <a href="brand">Brand Management
                           <form class="form-inline" action="brand" method="get">
-                              <button class="ancbutton" type="submit" style="background:lightgreen" ></button>
+                              <button  type="submit" style="background:lightgreen" ></button>
                           </form>
                       </a>
                     </div>

@@ -180,7 +180,6 @@ public class ProductController extends HttpServlet {
 
         request.setAttribute("message", message);
         request.setAttribute("productList", productList);
-
         RequestDispatcher rd = request.getRequestDispatcher("manageProduct.jsp");
         rd.forward(request, response);
     }

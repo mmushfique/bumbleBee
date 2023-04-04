@@ -29,7 +29,8 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Product getSpecificProduct(String productUniqueId) throws SQLException, ClassNotFoundException, IOException {
-        return productManager.getSpecificProduct(productUniqueId);
+        Product product=productManager.getSpecificProduct(productUniqueId);
+        return product;
     }
 
     @Override

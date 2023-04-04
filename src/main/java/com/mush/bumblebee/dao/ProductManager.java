@@ -38,7 +38,7 @@ public class ProductManager {
     public Product getSpecificProduct(String productUniqueId) throws ClassNotFoundException, SQLException, IOException {
         Connection connection = DbConnection.getConnection();
 
-        String query="SELECT * FROM product WHERE productUniqueId=?";
+        String query="SELECT * FROM product JOIN brand ON product.productBrand=brand.id JOIN category ON product.productBrand=category.id WHERE productUniqueId=?";
         PreparedStatement pst=connection.prepareStatement(query);
 
         pst.setString(1, productUniqueId);
@@ -51,8 +51,8 @@ public class ProductManager {
             product.setProductName(rs.getString("productName"));
             product.setProductPrice(rs.getDouble("productPrice"));
             product.setProductDescription(rs.getString("productDescription"));
-            product.setProductBrand(rs.getString("productBrand"));
-            product.setProductCategory(rs.getString("productCategory"));
+            product.setProductBrand(rs.getString("brandName"));
+            product.setProductCategory(rs.getString("categoryName"));
         }
 
         pst.close();
@@ -65,7 +65,7 @@ public class ProductManager {
         Connection connection = DbConnection.getConnection();
         Product product=new Product();
 
-        String query="SELECT * FROM product WHERE productName=?";
+        String query="SELECT * FROM product  JOIN brand ON product.productBrand=brand.id JOIN category ON product.productCategory=category.id WHERE productName=?";
         PreparedStatement pst=connection.prepareStatement(query);
 
         pst.setString(1, productName);
@@ -78,8 +78,8 @@ public class ProductManager {
             product.setProductName(rs.getString("productName"));
             product.setProductPrice(rs.getDouble("productPrice"));
             product.setProductDescription(rs.getString("productDescription"));
-            product.setProductBrand(rs.getString("productBrand"));
-            product.setProductCategory(rs.getString("productCategory"));
+            product.setProductBrand(rs.getString("brandName"));
+            product.setProductCategory(rs.getString("categoryName"));
 
             //productList.add(product);
         }

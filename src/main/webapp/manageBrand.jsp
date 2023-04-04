@@ -84,7 +84,6 @@
               <form class="form-inline" action="brand" method="get">
                 <div>
                   <input type="hidden" name="type" value="specific"/>
-                  <input type="hidden" name ="brandName" value="${brandList[0].brandName}"/>
                   <input type="text" placeholder="Search by brand name" name="brandName">
                   <button type="submit"><i class="fa fa-search"></i></button>
                 </div>
