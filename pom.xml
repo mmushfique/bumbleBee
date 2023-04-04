@@ -6,7 +6,7 @@
 
   <groupId>com.mush.bumbleBee</groupId>
   <artifactId>bumbleBee</artifactId>
-  <version>0.0.5</version>
+  <version>0.0.6</version>
   <packaging>war</packaging>
 
   <name>Bumble Bee</name>
