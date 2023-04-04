@@ -96,7 +96,7 @@
          <div class="container">
                     <div class="inner">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-10">
 
 
                                 <%if(request.getParameter("T")!=null){ %>
@@ -111,7 +111,7 @@
 
                                 <!------Edit form loads here------->
                                <tag:if test="${CRUDTYPE == 'EDIT'}">
-                                  <form action="brand" method="post" class="frm">
+                                  <form action="brand" method="post" class="editForm">
                                     <input type="hidden" name="type" value="update"/>
                                     <input type="hidden" name="id" value="${brandList[0].id}"/>
                                     <label>Edit brand name</label>
@@ -122,7 +122,9 @@
                                   <br><br><br><br>
                                </tag:if>
                             </div>
+                        </div>
 
+                        <div class="row">
                             <div class="col-md-10">
                             <table class="styled-table">
                                 <thead class="bg-light">

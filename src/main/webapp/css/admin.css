@@ -12,8 +12,9 @@
                background-color: #fff;
                border-radius:5px;
             }
-            label,span {
+            label,span,input,button {
               margin: 0;
+              margin-bottom:10px;
               color: hsla(0, 0%, 0%, 0.678);
             }
 
