@@ -64,27 +64,31 @@
          <br>
          <div id="usDiv">
            <center>
-              <h1>Manage Categorys</h1>
+              <h1>Manage Products</h1>
               <br>
               <div class="search" style="display:flex;margin-left:300px ">
 
-                <!------Command to create data------->
-                 <button type="submit" style="background:lightblue">
-                 <a  style="text-decoration:none" href='manageCategory.jsp?T=CREATE'>New category</a></button>
+                <!------Command to fetch brand and categories to create data------->
+              <form class="form-inline" action="product" method="get">
+                <div>
+                    <input type="hidden" name="type" value="fetchBrandAndCategory"/>
+                    <button type="submit" style="background:lightgreen" >New product</button>
+                </div>
+              </form>
 
 
                 <!------Form to search all data------->
-              <form class="form-inline" action="category" method="get">
+              <form class="form-inline" action="product" method="get">
                 <div>
-                    <button type="submit" style="background:lightgreen" >All categorys</button>
+                    <button type="submit" style="background:lightgreen" >All products</button>
                 </div>
               </form>
 
                 <!------Form to search data------->
-              <form class="form-inline" action="category" method="get">
+              <form class="form-inline" action="product" method="get">
                 <div>
-                  <input type="hidden" name="type" value="specific"/>
-                  <input type="text" placeholder="Search by category name" name="categoryName">
+                  <input type="hidden" name="type" value="search"/>
+                  <input type="text" placeholder="Search by product name" name="productName">
                   <button type="submit"><i class="fa fa-search"></i></button>
                 </div>
               </form>
@@ -97,57 +101,98 @@
                         <div class="row">
                             <div class="col-md-10">
 
-                                <!------Create form loads here------->
-                                <%if(request.getParameter("T")!=null){ %>
-                                  <form action="category" method="post" class="editForm">
-                                    <input type="hidden" name="type" value="register"/>
-                                    <label>Enter category name</label>
-                                    <input type="text" required name="categoryName"/>
-                                    <button name="btnCreate" id="btnCreate" type="submit" >Create Category</button>
+
+                               <tag:if test="${CRUDTYPE == 'FETCHED_DATA'}">
+                                  <form action="product" method="post" class="editForm">
+                                    <input type="hidden" name="type" value="create"/>
+
+                                    <h3>Create new product</h3>
+                                    <label>Enter product name</label>
+                                    <input type="text" required name="productName"/>
+                                    <label>Enter product price</label>
+                                    <input type="number" step=".01" required name="productPrice"/>
+                                    <label>Enter product description</label>
+                                    <input type="text" required name="productDescription"/>
+                                    <label>Select brand</label>
+                                    <select class="form-select" name="productBrand">
+                                            <option selected>Select brand</option>
+                                        <tag:forEach items="${brandList}" var="brand">
+                                            <option value="${brand.id}">${brand.brandName}</option>
+                                        </tag:forEach>
+                                    </select>
+                                    <br>
+                                    <select class="form-select" name="productCategory">
+                                            <option selected>Select category</option>
+                                    <tag:forEach items="${categoryList}" var="category">
+                                            <option value="${category.id}">${category.categoryName}</option>
+                                    </tag:forEach>
+                                    </select>
+                                    <br>
+                                    <button type="submit" >Create Product</button>
                                   </form>
                                   <br><br><br><br>
-                               <%}%>
+                               </tag:if>
 
                                 <!------Edit form loads here------->
                                <tag:if test="${CRUDTYPE == 'EDIT'}">
-                                  <form action="category" method="post" class="editForm">
+                                  <form action="product" method="post" class="editForm">
+                                    <input type="hidden" name="productUniqueId" value="${product.productUniqueId}"/>
                                     <input type="hidden" name="type" value="update"/>
-                                    <input type="hidden" name="id" value="${categoryList[0].id}"/>
-                                    <label>Edit category name</label>
-                                    <input type="text" required name="categoryName" value="${categoryList[0].categoryName}"/><br>
-                                    <button type="submit" >Update Category </button>
+
+                                    <h3>Edit product</h3>
+                                    <label>Enter product name</label>
+                                    <input type="text" required name="productName" value="${product.productName}"/>
+                                    <label>Enter product price</label>
+                                    <input type="number" step=".01" required name="productPrice" value="${product.productPrice}"/>
+                                    <label>Enter product description</label>
+                                    <input type="text" required name="productDescription" value="${product.productDescription}"/>
+                                    <label>Select brand</label>
+                                    <select class="form-select" name="productBrand">
+                                            <option selected >${product.productBrand}</option>
+                                            <option value="${brand.id}">${brand.brandName}</option>
+                                    </select>
+                                    <br>
+                                    <select class="form-select" name="productCategory">
+                                            <option selected>${product.productCategory}</option>
+                                    <tag:forEach items="${categoryList}" var="category">
+                                            <option value="${category.id}">${category.categoryName}</option>
+                                    </tag:forEach>
+                                    </select>
+                                    <br>
+                                    <button type="submit" >Update Product</button>
                                   </form>
                                   <br><br><br><br>
                                </tag:if>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-10">
                             <table class="styled-table">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th scope="col" style="min-width: 120px">Category Id</th>
-                                        <th scope="col" style="min-width: 120px">Category Name</th>
+                                        <th scope="col" style="min-width: 120px">Product Id</th>
+                                        <th scope="col" style="min-width: 120px">Product Name</th>
                                         <th scope="col" style="min-width: 120px">Edit</th>
                                         <th scope="col" style="min-width: 120px">Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tag:forEach var="category" items="${categoryList}">
+                                    <tag:forEach var="product" items="${productList}">
                                         <tr>
-                                            <td>${category.id}</td>
-                                            <td>${category.categoryName}</td>
+                                            <td>${product.id}</td>
+                                            <td>${product.productName}</td>
                                             <td>
-                                               <form class="form-inline" action="category" method="get">
+                                               <form class="form-inline" action="product" method="get">
                                                    <input type="hidden" name ="type" value="specific"/>
-                                                   <input type="hidden" name ="categoryName" value="${category.categoryName}"/>
+                                                   <input type="hidden" name ="productUniqueId" value="${product.productUniqueId}"/>
                                                    <button type="submit" style="background:yellow;padding-right:20px;padding-left:20px;" >Edit</button>
                                                 </form>
                                             </td>
                                             <td>
-                                               <form class="form-inline" action="category" method="post">
+                                               <form class="form-inline" action="product" method="post">
                                                    <input type="hidden" name ="type" value="delete"/>
-                                                   <input type="hidden" name ="categoryName" value="${category.categoryName}"/>
+                                                   <input type="hidden" name ="productUniqueId" value="${product.productUniqueId}"/>
                                                    <button type="submit" style="background:red;padding-right:20px;padding-left:20px;" >Delete</button>
                                                 </form>
                                             </td>
@@ -178,7 +223,7 @@
           ></i>
         </div>
 
-       <div class="sidebar__menu">
+        <div class="sidebar__menu">
           <div class="sidebar__link active_menu_link">
             <i class="fa fa-home"></i>
             <a href="index.jsp">Home</a>
@@ -190,13 +235,17 @@
           </div>
           <div class="sidebar__link">
             <i class="fa fa-user-secret" aria-hidden="true"></i>
-            <a href="product">Product Management</a>
+                       <a href="product">Product Management
+                          <form class="form-inline" action="category" method="get">
+                              <button type="submit" style="background:lightgreen" ></button>
+                          </form>
+                      </a>
           </div>
           <div class="sidebar__link">
                       <i class="fa fa-building-o"></i>
                       <a href="category">Category Management
                           <form class="form-inline" action="category" method="get">
-                              <button class="ancbutton" type="submit" style="background:lightgreen" ></button>
+                              <button  type="submit" style="background:lightgreen" ></button>
                           </form>
                       </a>
                     </div>
@@ -204,7 +253,7 @@
                       <i class="fa fa-users" aria-hidden="true"></i>
                       <a href="brand">Brand Management
                           <form class="form-inline" action="brand" method="get">
-                              <button class="ancbutton" type="submit" style="background:lightgreen" ></button>
+                              <button  type="submit" style="background:lightgreen" ></button>
                           </form>
                       </a>
                     </div>
