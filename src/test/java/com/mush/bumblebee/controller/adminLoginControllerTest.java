@@ -44,7 +44,7 @@ class adminLoginControllerTest {
         admin.setAdminFirstName("admin123");
 
         when(request.getParameter("adminEmail")).thenReturn(adminEmail);
-        when(request.getParameter("adminPassword")).thenReturn(adminPassword);
+        when(request.getParameter("password")).thenReturn(adminPassword);
         when(request.getSession()).thenReturn(httpSession);
         when(service.verifyLogin(adminEmail,adminPassword)).thenReturn(admin);
         Whitebox.setInternalState(adminLoginController, "service", service);
