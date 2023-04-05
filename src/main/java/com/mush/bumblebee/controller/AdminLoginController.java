@@ -23,7 +23,7 @@ public class AdminLoginController extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String adminEmail = request.getParameter("adminEmail");
-        String adminPassword = request.getParameter("adminPassword");
+        String adminPassword = request.getParameter("password");
         String message="";
 
         try {
@@ -33,6 +33,9 @@ public class AdminLoginController extends HttpServlet {
                 HttpSession httpSession = request.getSession();
                 httpSession.setAttribute("loggedUser",admin.getAdminFirstName());
                 httpSession.setAttribute("role","ADMIN");
+
+                RequestDispatcher rd=request.getRequestDispatcher("adminPanel.jsp");
+                rd.forward(request, response);
             }
             else {
                 message="Incorrect username or password, please try again";
@@ -43,7 +46,7 @@ public class AdminLoginController extends HttpServlet {
         }
 
         request.setAttribute("message", message);
-        RequestDispatcher rd=request.getRequestDispatcher("adminLogin.jsp");
+        RequestDispatcher rd=request.getRequestDispatcher("login.jsp");
         rd.forward(request, response);
     }
 }
