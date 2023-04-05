@@ -50,7 +50,7 @@
                 </ul>
                 <ul class="nav navbar-nav">
                     <li class="nav-item">
-                        <a href="signUp" class="nav-link">
+                        <a href="customerSignUp.jsp" class="nav-link">
                             <span class="bi bi-box-arrow-in-right mr-1"></span>
                             Signup as a customer
                         </a>
