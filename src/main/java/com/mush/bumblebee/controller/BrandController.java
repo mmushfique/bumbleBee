@@ -128,7 +128,7 @@ public class BrandController extends HttpServlet {
     {
         String message = "";
 
-        Long id= Long.valueOf(request.getParameter("id"));
+        long id= Long.parseLong(request.getParameter("id"));
         String brandName = request.getParameter("brandName");
         Brand brand = new Brand(id,brandName);
 

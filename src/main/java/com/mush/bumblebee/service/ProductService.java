@@ -17,5 +17,7 @@ public interface ProductService {
 
     public boolean updateProduct(Product product) throws SQLException, IOException, ClassNotFoundException;
 
+    public boolean updateProductQuantity(Product product) throws SQLException, IOException, ClassNotFoundException;
+
     public boolean deleteProduct(String productUniqueId) throws SQLException, ClassNotFoundException, IOException;
 }

@@ -38,7 +38,7 @@ public class ProductManager {
     public Product getSpecificProduct(String productUniqueId) throws ClassNotFoundException, SQLException, IOException {
         Connection connection = DbConnection.getConnection();
 
-        String query="SELECT * FROM product JOIN brand ON product.productBrand=brand.id JOIN category ON product.productBrand=category.id WHERE productUniqueId=?";
+        String query="SELECT * FROM product JOIN brand ON product.productBrand=brand.id JOIN category ON product.productCategory=category.id WHERE productUniqueId=?";
         PreparedStatement pst=connection.prepareStatement(query);
 
         pst.setString(1, productUniqueId);
@@ -51,8 +51,11 @@ public class ProductManager {
             product.setProductName(rs.getString("productName"));
             product.setProductPrice(rs.getDouble("productPrice"));
             product.setProductDescription(rs.getString("productDescription"));
-            product.setProductBrand(rs.getString("brandName"));
-            product.setProductCategory(rs.getString("categoryName"));
+            product.setProductBrand(rs.getString("productBrand"));
+            product.setProductCategory(rs.getString("productCategory"));
+            product.setProductBrandName(rs.getString("brandName"));
+            product.setProductCategoryName(rs.getString("categoryName"));
+
         }
 
         pst.close();
@@ -78,8 +81,10 @@ public class ProductManager {
             product.setProductName(rs.getString("productName"));
             product.setProductPrice(rs.getDouble("productPrice"));
             product.setProductDescription(rs.getString("productDescription"));
-            product.setProductBrand(rs.getString("brandName"));
-            product.setProductCategory(rs.getString("categoryName"));
+            product.setProductBrand(rs.getString("productBrand"));
+            product.setProductCategory(rs.getString("productCategory"));
+            product.setProductBrandName(rs.getString("brandName"));
+            product.setProductCategoryName(rs.getString("categoryName"));
 
             //productList.add(product);
         }
@@ -94,7 +99,7 @@ public class ProductManager {
         Connection connection = DbConnection.getConnection();
         List<Product> productList=new ArrayList<Product>();
 
-        String query="SELECT * FROM product";
+        String query="SELECT * FROM product JOIN brand ON product.productBrand=brand.id JOIN category ON product.productCategory=category.id ";
         Statement st=connection.createStatement();
 
         ResultSet rs=st.executeQuery(query);
@@ -103,9 +108,12 @@ public class ProductManager {
             product.setProductUniqueId(rs.getString("productUniqueId"));
             product.setProductName(rs.getString("productName"));
             product.setProductPrice(rs.getDouble("productPrice"));
+            product.setProductQuantity(rs.getLong("productQuantity"));
             product.setProductDescription(rs.getString("productDescription"));
             product.setProductBrand(rs.getString("productBrand"));
             product.setProductCategory(rs.getString("productCategory"));
+            product.setProductBrandName(rs.getString("brandName"));
+            product.setProductCategoryName(rs.getString("categoryName"));
 
             productList.add(product);
         }
@@ -129,6 +137,23 @@ public class ProductManager {
         pst.setString(4, product.getProductBrand());
         pst.setString(5, product.getProductCategory());
         pst.setString(6, product.getProductUniqueId());
+
+        int result = pst.executeUpdate();
+
+        pst.close();
+        connection.close();
+
+        return result>0;
+    }
+
+    public boolean updateProductQuantity(Product product) throws ClassNotFoundException, SQLException, IOException {
+        Connection connection = DbConnection.getConnection();
+
+        String query="UPDATE product SET productQuantity=productQuantity +( ?) WHERE productUniqueId=?";
+
+        PreparedStatement pst=connection.prepareStatement(query);
+        pst.setLong(1, product.getProductQuantity());
+        pst.setString(2, product.getProductUniqueId());
 
         int result = pst.executeUpdate();
 

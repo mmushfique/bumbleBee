@@ -77,7 +77,7 @@ public class BrandManager {
     public boolean updateBrand(Brand brand) throws ClassNotFoundException, SQLException, IOException {
         Connection connection = DbConnection.getConnection();
 
-        String query="UPDATE category SET brandName=? WHERE id=?";
+        String query="UPDATE brand SET brandName=? WHERE id=?";
 
         PreparedStatement pst=connection.prepareStatement(query);
         pst.setString(1, brand.getBrandName());

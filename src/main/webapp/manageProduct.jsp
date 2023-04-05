@@ -77,7 +77,7 @@
               </form>
 
 
-                <!------Form to search all data------->
+                <!------Form to search------->
               <form class="form-inline" action="product" method="get">
                 <div>
                     <button type="submit" style="background:lightgreen" >All products</button>
@@ -148,15 +148,17 @@
                                     <input type="text" required name="productDescription" value="${product.productDescription}"/>
                                     <label>Select brand</label>
                                     <select class="form-select" name="productBrand">
-                                            <option selected >${product.productBrand}</option>
+                                        <option selected value="${product.productBrand}">${product.productBrandName}</option>
+                                        <tag:forEach items="${brandList}" var="brand">
                                             <option value="${brand.id}">${brand.brandName}</option>
+                                         </tag:forEach>
                                     </select>
                                     <br>
                                     <select class="form-select" name="productCategory">
-                                            <option selected>${product.productCategory}</option>
-                                    <tag:forEach items="${categoryList}" var="category">
-                                            <option value="${category.id}">${category.categoryName}</option>
-                                    </tag:forEach>
+                                            <option selected value="${product.productCategory}">${product.productCategoryName}</option>
+                                            <tag:forEach items="${categoryList}" var="category">
+                                                <option value="${category.id}">${category.categoryName}</option>
+                                            </tag:forEach>
                                     </select>
                                     <br>
                                     <button type="submit" >Update Product</button>
@@ -171,17 +173,25 @@
                             <table class="styled-table">
                                 <thead class="bg-light">
                                     <tr>
-                                        <th scope="col" style="min-width: 120px">Product Id</th>
-                                        <th scope="col" style="min-width: 120px">Product Name</th>
-                                        <th scope="col" style="min-width: 120px">Edit</th>
-                                        <th scope="col" style="min-width: 120px">Delete</th>
+                                        <th scope="col" style="min-width: 70px">Product Name</th>
+                                        <th scope="col" style="min-width: 70px">Product Price</th>
+                                        <th scope="col" style="min-width: 70px">Products in Stock</th>
+                                        <th scope="col" style="min-width: 120px">Product Description</th>
+                                        <th scope="col" style="min-width: 70px">Product Brand</th>
+                                        <th scope="col" style="min-width: 70px">Product Category</th>
+                                        <th scope="col" style="min-width: 70px">Edit</th>
+                                        <th scope="col" style="min-width: 70px">Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tag:forEach var="product" items="${productList}">
                                         <tr>
-                                            <td>${product.id}</td>
                                             <td>${product.productName}</td>
+                                            <td>${product.productPrice}</td>
+                                            <td>${product.productQuantity}</td>
+                                            <td>${product.productDescription}</td>
+                                            <td>${product.productBrandName}</td>
+                                            <td>${product.productCategoryName}</td>
                                             <td>
                                                <form class="form-inline" action="product" method="get">
                                                    <input type="hidden" name ="type" value="specific"/>

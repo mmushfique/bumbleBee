@@ -46,6 +46,7 @@ public class ProductController extends HttpServlet {
         else if (flag!=null && flag.equals("search")){
             searchProduct(request, response);
         }
+        else
         {
             viewAllProducts(request, response);
         }
