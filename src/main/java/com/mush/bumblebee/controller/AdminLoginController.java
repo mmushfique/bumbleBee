@@ -39,14 +39,13 @@ public class AdminLoginController extends HttpServlet {
             }
             else {
                 message="Incorrect username or password, please try again";
+                request.setAttribute("message", message);
+                RequestDispatcher rd=request.getRequestDispatcher("login.jsp");
+                rd.forward(request, response);
             }
         } catch (ClassNotFoundException | SQLException | IOException e) {
             e.printStackTrace();
             message=e.getMessage();
         }
-
-        request.setAttribute("message", message);
-        RequestDispatcher rd=request.getRequestDispatcher("login.jsp");
-        rd.forward(request, response);
     }
 }
