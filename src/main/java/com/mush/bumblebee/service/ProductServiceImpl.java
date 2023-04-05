@@ -49,6 +49,11 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    public boolean updateProductQuantity(Product product) throws SQLException, IOException, ClassNotFoundException {
+        return productManager.updateProductQuantity(product);
+    }
+
+    @Override
     public boolean deleteProduct(String productUniqueId) throws SQLException, ClassNotFoundException, IOException {
         return productManager.deleteProduct(productUniqueId);
     }
