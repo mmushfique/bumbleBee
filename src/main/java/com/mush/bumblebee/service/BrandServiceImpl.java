@@ -23,7 +23,7 @@ public class BrandServiceImpl implements BrandService{
     }
 
     @Override
-    public boolean registerBrand(Brand brand) throws SQLException, ClassNotFoundException, IOException {
+    public String registerBrand(Brand brand) throws SQLException, ClassNotFoundException, IOException {
         return brandManager.registerBrand(brand);
     }
 
@@ -38,7 +38,7 @@ public class BrandServiceImpl implements BrandService{
     }
 
     @Override
-    public boolean updateBrand(Brand brand) throws SQLException, IOException, ClassNotFoundException {
+    public String updateBrand(Brand brand) throws SQLException, IOException, ClassNotFoundException {
         return brandManager.updateBrand(brand);
     }
 

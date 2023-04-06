@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CustomerService {
 
-    public boolean signUp(Customer customer) throws SQLException, ClassNotFoundException, IOException;
+    public String signUp(Customer customer) throws SQLException, ClassNotFoundException, IOException;
 
 
     public List<Customer> getAllCustomers() throws SQLException, ClassNotFoundException, IOException;

@@ -14,20 +14,31 @@ import java.util.List;
 
 public class BrandManager {
 
-    public boolean registerBrand(Brand brand) throws ClassNotFoundException, SQLException, IOException {
+    public String registerBrand(Brand brand) throws ClassNotFoundException, SQLException, IOException {
         Connection connection = DbConnection.getConnection();
 
-        String query="INSERT INTO brand (brandName) VALUES(?)";
+        String query="SELECT * FROM brand WHERE brandName=?";
         PreparedStatement pst=connection.prepareStatement(query);
-
         pst.setString(1, brand.getBrandName());
+        ResultSet rs=pst.executeQuery();
+        if(rs.next()){
+            pst.close();
+            connection.close();
+            return "You already have this brand:"+brand.getBrandName()+", try a different one";
+        }else {
 
-        int result=pst.executeUpdate();
+            query = "INSERT INTO brand (brandName) VALUES(?)";
+            pst = connection.prepareStatement(query);
 
-        pst.close();
-        connection.close();
+            pst.setString(1, brand.getBrandName());
 
-        return result>0;
+            int result = pst.executeUpdate();
+
+            pst.close();
+            connection.close();
+
+            return "created";
+        }
     }
 
     public Brand getSpecificBrand(String brandName) throws ClassNotFoundException, SQLException, IOException {
@@ -74,21 +85,32 @@ public class BrandManager {
         return brandList;
     }
 
-    public boolean updateBrand(Brand brand) throws ClassNotFoundException, SQLException, IOException {
+    public String updateBrand(Brand brand) throws ClassNotFoundException, SQLException, IOException {
         Connection connection = DbConnection.getConnection();
 
-        String query="UPDATE brand SET brandName=? WHERE id=?";
-
+        String query="SELECT * FROM brand WHERE brandName=?";
         PreparedStatement pst=connection.prepareStatement(query);
         pst.setString(1, brand.getBrandName());
-        pst.setLong(2,brand.getId());
+        ResultSet rs=pst.executeQuery();
+        if(rs.next()){
+            pst.close();
+            connection.close();
+            return "You already have this brand:"+brand.getBrandName()+", try a different one";
+        }else {
 
-        int result = pst.executeUpdate();
+            query = "UPDATE brand SET brandName=? WHERE id=?";
 
-        pst.close();
-        connection.close();
+            pst = connection.prepareStatement(query);
+            pst.setString(1, brand.getBrandName());
+            pst.setLong(2, brand.getId());
 
-        return result>0;
+            int result = pst.executeUpdate();
+
+            pst.close();
+            connection.close();
+
+            return "updated";
+        }
     }
 
     public boolean deleteBrand(String brandName) throws SQLException, ClassNotFoundException, IOException {

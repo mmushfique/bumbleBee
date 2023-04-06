@@ -4,16 +4,10 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="com.mush.bumblebee.dao.DbConnection"%>
 <%
-    HttpSession se = request.getSession();
-    String user = (String) se.getAttribute("loggedUser");
-    String role = (String) se.getAttribute("role");
-    role="ADMIN";
-    String query="";
+    HttpSession httpSession = request.getSession();
+    String user = (String) httpSession.getAttribute("loggedUser");
+    String role = (String) httpSession.getAttribute("role");
     if (role != null && role.equals("ADMIN")) {
-        Connection con;
-        DbConnection db = new DbConnection();
-        con = db.getConnection();
-        Statement st = con.createStatement();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,26 +62,26 @@
                 aria-hidden="true"
               ></i>
               <div class="card_inner">
-                <p class="text-primary-p">Number of Registered users</p>
+                <p class="text-primary-p">Number of Customers</p>
                 <%
-                //query="SELECT COUNT(*) FROM user";
-                //ResultSet r = st.executeQuery(query);
-                //r.next();
+                query="SELECT COUNT(*) FROM customer";
+                ResultSet r = st.executeQuery(query);
+                r.next();
                 %>
-                <span class="font-bold text-title"><%%></span>
+                <span class="font-bold text-title"><%r.getInt(1)%></span>
               </div>
             </div>
 
             <div class="card">
              <i class="fa fa-bell" aria-hidden="true"></i>
               <div class="card_inner">
-                <p class="text-primary-p">Number of advertisements</p>
+                <p class="text-primary-p">Number of Products</p>
                 <%
-                //query="SELECT COUNT(*) FROM advertisement";
-                //r = st.executeQuery(query);
-                //r.next();
+                query="SELECT COUNT(*) FROM product";
+                r = st.executeQuery(query);
+                r.next();
                 %>
-                <span class="font-bold text-title"><%%></span>
+                <span class="font-bold text-title"><%r.getInt(1)%></span>
               </div>
             </div>
 
@@ -97,13 +91,13 @@
                 aria-hidden="true"
               ></i>
               <div class="card_inner">
-                <p class="text-primary-p">Number of active advertisements</p>
+                <p class="text-primary-p">Loans to be received</p>
                 <%
-                //query="SELECT COUNT(*) FROM advertisement WHERE status='1'";
-                //r = st.executeQuery(query);
-                //r.next();
+                query="SELECT SUM(loanBalance) AS total FROM bumblebee.loan;";
+                r = st.executeQuery(query);
+                r.next();
                 %>
-                <span class="font-bold text-title"><%%></span>
+                <span class="font-bold text-title"><%r.getInt("total")%></span>
               </div>
             </div>
 
@@ -111,13 +105,13 @@
                 <i class="fa fa-flag" aria-hidden="true" ></i>
              
               <div class="card_inner">
-                <p class="text-primary-p">Number of reported Ads</p>
+                <p class="text-primary-p">Count of producs having less stock(<10)</p>
                 <%
-                //query="SELECT COUNT(*) FROM report";
-                //r = st.executeQuery(query);
-                //r.next();
+                query="SELECT COUNT(*) FROM bumblebee.product WHERE productQuantity<10";
+                r = st.executeQuery(query);
+                r.next();
                 %>
-                <span class="font-bold text-title"><%%></span>
+                <span class="font-bold text-title"><%r.getInt(1)%></span>
               </div>
             </div>
           </div>
@@ -130,7 +124,7 @@
               <div class="charts__left__title">
                 <div>
                   <h1>Daily Reports</h1>
-                  <p>Rent Portal</p>
+                  <p>Bumble Bee</p>
                 </div>
 <!--                <i class="fa fa-usd" aria-hidden="true"></i>-->
               </div>
@@ -226,7 +220,7 @@
     <script src="js/adminPanel.js"></script>
     
         <%} else {
-            String redirectURL = "/RentOnline/errorDis.html";
+            String redirectURL = "/bumbleBee/errorDis.html";
             response.sendRedirect(redirectURL);
         }%>
   </body>

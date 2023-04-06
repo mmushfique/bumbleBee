@@ -22,7 +22,7 @@ public class CategoryServiceImpl implements CategoryService{
         return service;
     }
     @Override
-    public boolean registerCategory(Category category) throws SQLException, ClassNotFoundException, IOException {
+    public String registerCategory(Category category) throws SQLException, ClassNotFoundException, IOException {
         return categoryManager.registerCategory(category);
     }
 
@@ -37,7 +37,7 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public boolean updateCategory(Category category) throws SQLException, IOException, ClassNotFoundException {
+    public String updateCategory(Category category) throws SQLException, IOException, ClassNotFoundException {
         return categoryManager.updateCategory(category);
     }
 

@@ -73,7 +73,7 @@ class CategoryControllerTest {
         when(request.getParameter("type")).thenReturn("register");
         when(request.getParameter("categoryName")).thenReturn("Category 1");
         when(response.encodeRedirectURL("/bumbleBee/category")).thenReturn("/bumbleBee/category");
-        when(service.registerCategory(any(Category.class))).thenReturn(true);
+        when(service.registerCategory(any(Category.class))).thenReturn("created");
         Whitebox.setInternalState(categoryController, "service", service);
 
         categoryController.doPost(request, response);
@@ -86,12 +86,12 @@ class CategoryControllerTest {
         when(request.getParameter("type")).thenReturn("register");
         when(request.getParameter("categoryName")).thenReturn("Category 1");
         when(request.getRequestDispatcher("manageCategory.jsp")).thenReturn(requestDispatcher);
-        when(service.registerCategory(any(Category.class))).thenReturn(false);
+        when(service.registerCategory(any(Category.class))).thenReturn("You already have a category:Category 1, try a different one");
         Whitebox.setInternalState(categoryController, "service", service);
 
         categoryController.doPost(request, response);
 
-        verify(request).setAttribute("message", "Failed to add the category Category 1");
+        verify(request).setAttribute("message", "You already have a category:Category 1, try a different one");
         verify(requestDispatcher).forward(request, response);
     }
 }

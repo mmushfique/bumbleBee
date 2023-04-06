@@ -6,13 +6,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface CategoryService {
-    boolean registerCategory(Category category) throws SQLException, ClassNotFoundException, IOException;
+    String registerCategory(Category category) throws SQLException, ClassNotFoundException, IOException;
 
     Category getSpecificCategory(String categoryName) throws SQLException, ClassNotFoundException, IOException;
 
     List<Category> getAllCategorys() throws SQLException, ClassNotFoundException, IOException;
 
-    boolean updateCategory(Category category) throws SQLException, IOException, ClassNotFoundException;
+    String updateCategory(Category category) throws SQLException, IOException, ClassNotFoundException;
 
     boolean deleteCategory(String categoryName) throws SQLException, ClassNotFoundException, IOException;
 }
