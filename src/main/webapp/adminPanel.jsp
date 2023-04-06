@@ -38,8 +38,8 @@
           <i class="fa fa-bars" aria-hidden="true"></i>
         </div>
         <div class="navbar__left">
-          <a id="us" href="index.jsp">Home</a>
-          <a class="active_link" href="adminPanel.jsp">Admin</a>
+          <a id="us" class="active_link" href="adminPanel.jsp">Dashboard</a>
+          <a href="#">Admin</a>
         </div>
         
       </nav>
