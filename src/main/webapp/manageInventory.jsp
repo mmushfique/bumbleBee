@@ -115,7 +115,7 @@
                                     </select>
                                     <br>
                                      <label>Enter the number of products added</label>
-                                     <input type="number" step="" required name="inventoryQuantity"/>
+                                     <input type="number" step=".01" required name="inventoryQuantity"/>
 
                                     <button type="submit" >Save record</button>
                                   </form>
