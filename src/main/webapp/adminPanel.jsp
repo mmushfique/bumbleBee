@@ -144,8 +144,7 @@
       <div id="sidebar">
         <div class="sidebar__title">
           <div class="sidebar__img">
-            <img src="logo.png" alt="logo" />
-            <h1>Rent Portal</h1>
+            <h1>Bumble Bee</h1>
           </div>
           <i
             onclick="closeSidebar()"

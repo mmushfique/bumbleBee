@@ -109,15 +109,15 @@
                                     <label>Enter product description</label>
                                     <input type="text" required name="productDescription"/>
                                     <label>Select brand</label>
-                                    <select class="form-select" name="productBrand">
-                                            <option selected>Select brand</option>
+                                    <select class="form-select" name="productBrand" required>
+                                            <option selected value="${brandList[0].id}">Select brand</option>
                                         <tag:forEach items="${brandList}" var="brand">
                                             <option value="${brand.id}">${brand.brandName}</option>
                                         </tag:forEach>
                                     </select>
                                     <br>
-                                    <select class="form-select" name="productCategory">
-                                            <option selected>Select category</option>
+                                    <select class="form-select" name="productCategory" required>
+                                            <option selected value="${categoryList[0].id}">Select category</option>
                                     <tag:forEach items="${categoryList}" var="category">
                                             <option value="${category.id}">${category.categoryName}</option>
                                     </tag:forEach>
@@ -142,14 +142,14 @@
                                     <label>Enter product description</label>
                                     <input type="text" required name="productDescription" value="${product.productDescription}"/>
                                     <label>Select brand</label>
-                                    <select class="form-select" name="productBrand">
+                                    <select class="form-select" name="productBrand" required>
                                         <option selected value="${product.productBrand}">${product.productBrandName}</option>
                                         <tag:forEach items="${brandList}" var="brand">
                                             <option value="${brand.id}">${brand.brandName}</option>
                                          </tag:forEach>
                                     </select>
                                     <br>
-                                    <select class="form-select" name="productCategory">
+                                    <select class="form-select" name="productCategory" required>
                                             <option selected value="${product.productCategory}">${product.productCategoryName}</option>
                                             <tag:forEach items="${categoryList}" var="category">
                                                 <option value="${category.id}">${category.categoryName}</option>

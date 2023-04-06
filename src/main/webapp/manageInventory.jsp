@@ -57,7 +57,7 @@
          <br>
          <div id="usDiv">
            <center>
-              <h1>Manage Products</h1>
+              <h1>Manage Inventory</h1>
               <br>
               <div style="color:red">${message}</div>
               <br>
@@ -104,7 +104,7 @@
                                     <h3>Add new inventory</h3>
 
                                     <select class="form-select" name="inventoryForProductId">
-                                            <option selected>Select product</option>
+                                            <option selected value="${product.productUniqueId}">Select product</option>
                                         <tag:forEach items="${productList}" var="product">
                                             <option value="${product.productUniqueId}">${product.productName}</option>
                                         </tag:forEach>
