@@ -31,7 +31,7 @@
           <small>error</small>
         </div>
         <div>
-          <input class="form-control" required type="date" id="dob" name="customerDOB" placeholder="Last Name" required/>
+          <input class="form-control" required type="date" id="dob" name="customerDOB" placeholder="Last Name"/>
           <small>error</small>
         </div>
         <div>

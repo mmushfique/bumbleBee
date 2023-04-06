@@ -1,8 +1,5 @@
 <%response.setHeader("Cache-Control", "private, no-store, no-cache, must-revalidate");%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="com.mush.bumblebee.dao.DbConnection"%>
+
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" isELIgnored="false" %>
@@ -161,7 +158,17 @@
                 </div>
             </div>
         </div>
+<script>
 
+// Check if the user entered something
+if (input !== null) {
+    // Do something with the user input
+    console.log("Hello, " + input + "!");
+} else {
+    // User clicked Cancel
+    console.log("User cancelled the prompt.");
+}
+</script>
 <!--------------------------------------------------------------------------------------------------------------------------->
   </div>
       </main>
