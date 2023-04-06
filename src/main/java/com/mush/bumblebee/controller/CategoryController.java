@@ -59,14 +59,14 @@ public class CategoryController extends HttpServlet {
         Category category = new Category(categoryName);
 
         try {
-            boolean result=service.registerCategory(category);
-            if (result)
+            String result=service.registerCategory(category);
+            if (result.equals("created"))
             {
                 message="The category "+categoryName+" has been added sucessfully";
                 response.sendRedirect("/bumbleBee/category");
             }
             else {
-                message="Failed to add the category "+categoryName;
+                message=result;
                 request.setAttribute("message", message);
                 RequestDispatcher rd=request.getRequestDispatcher("manageCategory.jsp");
                 rd.forward(request, response);
@@ -87,7 +87,7 @@ public class CategoryController extends HttpServlet {
 
         try {
             category = service.getSpecificCategory(categoryName);
-            if (category==null)
+            if (category.getCategoryName()==null)
             {
                 message="There is no category "+categoryName+" ,search with correct names";
                 request.setAttribute("message", message);
@@ -133,20 +133,19 @@ public class CategoryController extends HttpServlet {
         Category category = new Category(id,categoryName);
 
         try {
-            boolean result = service.updateCategory(category);
-            if(result) {
-                message = "Category has been successfully updated! Category name: " + category.getCategoryName();
+            String result = service.updateCategory(category);
+            if(result.equals("updated")) {
+                message = result;
                 response.sendRedirect("/bumbleBee/category");
             }
             else {
-                message = "Failed to update the product! Category name: " + category.getCategoryName();
+                message = result;
                 request.setAttribute("message", message);
                 RequestDispatcher rd = request.getRequestDispatcher("manageCategory.jsp");
                 rd.forward(request, response);
             }
 
         } catch (ClassNotFoundException | SQLException e) {
-
             message = e.getMessage();
         }
     }

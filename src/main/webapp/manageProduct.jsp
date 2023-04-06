@@ -1,8 +1,4 @@
 <%response.setHeader("Cache-Control", "private, no-store, no-cache, must-revalidate");%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="com.mush.bumblebee.dao.DbConnection"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" isELIgnored="false" %>
@@ -12,10 +8,7 @@
     HttpSession httpSession = request.getSession();
     String user = (String) httpSession.getAttribute("loggedUser");
     String role = (String) httpSession.getAttribute("role");
-    role="ADMIN";//need to remove this after login is implemented
     if (role != null && role.equals("ADMIN")) {
-    Connection connection = DbConnection.getConnection();
-    Statement st = connection.createStatement();
 %>
 
 <!DOCTYPE html>
@@ -41,7 +34,7 @@
            <i class="fa fa-bars" aria-hidden="true"></i>
          </div>
          <div class="navbar__left">
-           <a id="us" class="active_link" href="index.jsp">Dashboard</a>
+           <a id="us" class="active_link" href="adminPanel.jsp">Dashboard</a>
            <a href="#">Admin</a>
          </div>
 
@@ -65,6 +58,8 @@
          <div id="usDiv">
            <center>
               <h1>Manage Products</h1>
+              <br>
+              <div style="color:red">${message}</div>
               <br>
               <div class="search" style="display:flex;margin-left:300px ">
 
@@ -114,15 +109,15 @@
                                     <label>Enter product description</label>
                                     <input type="text" required name="productDescription"/>
                                     <label>Select brand</label>
-                                    <select class="form-select" name="productBrand">
-                                            <option selected>Select brand</option>
+                                    <select class="form-select" name="productBrand" required>
+                                            <option selected value="${brandList[0].id}">Select brand</option>
                                         <tag:forEach items="${brandList}" var="brand">
                                             <option value="${brand.id}">${brand.brandName}</option>
                                         </tag:forEach>
                                     </select>
                                     <br>
-                                    <select class="form-select" name="productCategory">
-                                            <option selected>Select category</option>
+                                    <select class="form-select" name="productCategory" required>
+                                            <option selected value="${categoryList[0].id}">Select category</option>
                                     <tag:forEach items="${categoryList}" var="category">
                                             <option value="${category.id}">${category.categoryName}</option>
                                     </tag:forEach>
@@ -147,14 +142,14 @@
                                     <label>Enter product description</label>
                                     <input type="text" required name="productDescription" value="${product.productDescription}"/>
                                     <label>Select brand</label>
-                                    <select class="form-select" name="productBrand">
+                                    <select class="form-select" name="productBrand" required>
                                         <option selected value="${product.productBrand}">${product.productBrandName}</option>
                                         <tag:forEach items="${brandList}" var="brand">
                                             <option value="${brand.id}">${brand.brandName}</option>
                                          </tag:forEach>
                                     </select>
                                     <br>
-                                    <select class="form-select" name="productCategory">
+                                    <select class="form-select" name="productCategory" required>
                                             <option selected value="${product.productCategory}">${product.productCategoryName}</option>
                                             <tag:forEach items="${categoryList}" var="category">
                                                 <option value="${category.id}">${category.categoryName}</option>
@@ -239,9 +234,13 @@
             <a href="index.jsp">Home</a>
           </div>
           <h2>Manage</h2>
-          <div class="sidebar__link">
+ <div class="sidebar__link">
             <i class="fa fa-user-secret" aria-hidden="true"></i>
-            <a href="inventory">Inventory Management</a>
+                                    <a href="inventory">Inventory Management
+                                      <form class="form-inline" action="category" method="get">
+                                          <button type="submit" style="background:lightgreen" ></button>
+                                      </form>
+                                  </a>
           </div>
           <div class="sidebar__link">
             <i class="fa fa-user-secret" aria-hidden="true"></i>
@@ -259,6 +258,7 @@
                           </form>
                       </a>
                     </div>
+
                     <div class="sidebar__link">
                       <i class="fa fa-users" aria-hidden="true"></i>
                       <a href="brand">Brand Management
@@ -270,11 +270,19 @@
           <h2>Information</h2>
           <div class="sidebar__link">
             <i class="fa fa-archive"></i>
-            <a href="customer">Customer Details</a>
+                        <a href="customers">Customer Details
+                          <form class="form-inline" action="brand" method="get">
+                              <button  type="submit" style="background:lightgreen" ></button>
+                          </form>
+                      </a>
           </div>
           <div class="sidebar__link">
             <i class="fa fa-book" aria-hidden="true"></i>
-            <a href="report">View reports</a>
+                        <a href="adminPanel.jsp">View reports
+                          <form class="form-inline" action="brand" method="get">
+                              <button  type="submit" style="background:lightgreen" ></button>
+                          </form>
+                      </a>
           </div>
           <div class="sidebar__logout">
             <i class="fa fa-power-off"></i>

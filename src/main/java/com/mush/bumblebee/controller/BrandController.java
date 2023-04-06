@@ -59,14 +59,13 @@ public class BrandController extends HttpServlet {
         Brand brand = new Brand(brandName);
 
         try {
-            boolean result=service.registerBrand(brand);
-            if (result)
+            String result=service.registerBrand(brand);
+            if (result.equals("created"))
             {
-                message="The brand "+brandName+" has been added sucessfully";
                 response.sendRedirect("/bumbleBee/brand");
             }
             else {
-                message="Failed to add the brand "+brandName;
+                message=result;
                 request.setAttribute("message", message);
                 RequestDispatcher rd=request.getRequestDispatcher("manageBrand.jsp");
                 rd.forward(request, response);
@@ -87,7 +86,7 @@ public class BrandController extends HttpServlet {
 
         try {
             brand = service.getSpecificBrand(brandName);
-            if (brand==null)
+            if (brand.getBrandName()==null)
             {
                 message="There is no brand "+brandName+" ,search with correct names";
                 request.setAttribute("message", message);
@@ -133,13 +132,13 @@ public class BrandController extends HttpServlet {
         Brand brand = new Brand(id,brandName);
 
         try {
-            boolean result = service.updateBrand(brand);
-            if(result) {
+            String result = service.updateBrand(brand);
+            if(result.equals("updated")) {
                 message = "Brand has been successfully updated! Brand name: " + brand.getBrandName();
                 response.sendRedirect("/bumbleBee/brand");
             }
             else {
-                message = "Failed to update the product! Brand name: " + brand.getBrandName();
+                message = result;
                 request.setAttribute("message", message);
                 RequestDispatcher rd = request.getRequestDispatcher("manageBrand.jsp");
                 rd.forward(request, response);

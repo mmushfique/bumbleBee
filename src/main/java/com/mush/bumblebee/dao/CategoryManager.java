@@ -12,20 +12,31 @@ import java.util.List;
 
 public class CategoryManager {
 
-    public boolean registerCategory(Category category) throws ClassNotFoundException, SQLException, IOException {
+    public String registerCategory(Category category) throws ClassNotFoundException, SQLException, IOException {
         Connection connection = DbConnection.getConnection();
 
-        String query="INSERT INTO category (categoryName) VALUES(?)";
+        String query="SELECT * FROM category WHERE categoryName=?";
         PreparedStatement pst=connection.prepareStatement(query);
-
         pst.setString(1, category.getCategoryName());
+        ResultSet rs=pst.executeQuery();
+        if(rs.next()){
+            pst.close();
+            connection.close();
+            return "You already have a category:" +category.getCategoryName()+", try a different one";
+        }else {
 
-        int result=pst.executeUpdate();
+            query = "INSERT INTO category (categoryName) VALUES(?)";
+            pst = connection.prepareStatement(query);
 
-        pst.close();
-        connection.close();
+            pst.setString(1, category.getCategoryName());
 
-        return result>0;
+            int result = pst.executeUpdate();
+
+            pst.close();
+            connection.close();
+
+            return "created";
+        }
     }
 
     public Category getSpecificCategory(String categoryName) throws ClassNotFoundException, SQLException, IOException {
@@ -72,20 +83,31 @@ public class CategoryManager {
         return categoryList;
     }
 
-    public boolean updateCategory(Category category) throws ClassNotFoundException, SQLException, IOException {
+    public String updateCategory(Category category) throws ClassNotFoundException, SQLException, IOException {
         Connection connection = DbConnection.getConnection();
 
-        String query="UPDATE category SET categoryName=? WHERE id=?";
-
+        String query="SELECT * FROM category WHERE categoryName=?";
         PreparedStatement pst=connection.prepareStatement(query);
         pst.setString(1, category.getCategoryName());
-        pst.setLong(2, category.getId());
-        int result = pst.executeUpdate();
+        ResultSet rs=pst.executeQuery();
+        if(rs.next()){
+            pst.close();
+            connection.close();
+            return "You already have a category:" +category.getCategoryName()+", try a different one";
+        }else {
 
-        pst.close();
-        connection.close();
+            query = "UPDATE category SET categoryName=? WHERE id=?";
 
-        return result>0;
+            pst = connection.prepareStatement(query);
+            pst.setString(1, category.getCategoryName());
+            pst.setLong(2, category.getId());
+            int result = pst.executeUpdate();
+
+            pst.close();
+            connection.close();
+
+            return "updated";
+        }
     }
 
     public boolean deleteCategory(String categoryName) throws SQLException, ClassNotFoundException, IOException {

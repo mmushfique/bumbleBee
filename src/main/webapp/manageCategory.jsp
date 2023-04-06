@@ -1,8 +1,5 @@
 <%response.setHeader("Cache-Control", "private, no-store, no-cache, must-revalidate");%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="com.mush.bumblebee.dao.DbConnection"%>
+
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" isELIgnored="false" %>
@@ -12,10 +9,7 @@
     HttpSession httpSession = request.getSession();
     String user = (String) httpSession.getAttribute("loggedUser");
     String role = (String) httpSession.getAttribute("role");
-    role="ADMIN";//need to remove this after login is implemented
     if (role != null && role.equals("ADMIN")) {
-    Connection connection = DbConnection.getConnection();
-    Statement st = connection.createStatement();
 %>
 
 <!DOCTYPE html>
@@ -41,7 +35,7 @@
            <i class="fa fa-bars" aria-hidden="true"></i>
          </div>
          <div class="navbar__left">
-           <a id="us" class="active_link" href="index.jsp">Dashboard</a>
+           <a id="us" class="active_link" href="adminPanel.jsp">Dashboard</a>
            <a href="#">Admin</a>
          </div>
 
@@ -65,6 +59,8 @@
          <div id="usDiv">
            <center>
               <h1>Manage Categorys</h1>
+              <br>
+              <div style="color:red">${message}</div>
               <br>
               <div class="search" style="display:flex;margin-left:300px ">
 
@@ -184,38 +180,55 @@
             <a href="index.jsp">Home</a>
           </div>
           <h2>Manage</h2>
-          <div class="sidebar__link">
+ <div class="sidebar__link">
             <i class="fa fa-user-secret" aria-hidden="true"></i>
-            <a href="inventory">Inventory Management</a>
+                                    <a href="inventory">Inventory Management
+                                      <form class="form-inline" action="category" method="get">
+                                          <button type="submit" style="background:lightgreen" ></button>
+                                      </form>
+                                  </a>
           </div>
           <div class="sidebar__link">
             <i class="fa fa-user-secret" aria-hidden="true"></i>
-            <a href="product">Product Management</a>
+                       <a href="product">Product Management
+                          <form class="form-inline" action="category" method="get">
+                              <button type="submit" style="background:lightgreen" ></button>
+                          </form>
+                      </a>
           </div>
           <div class="sidebar__link">
                       <i class="fa fa-building-o"></i>
                       <a href="category">Category Management
                           <form class="form-inline" action="category" method="get">
-                              <button class="ancbutton" type="submit" style="background:lightgreen" ></button>
+                              <button  type="submit" style="background:lightgreen" ></button>
                           </form>
                       </a>
                     </div>
+
                     <div class="sidebar__link">
                       <i class="fa fa-users" aria-hidden="true"></i>
                       <a href="brand">Brand Management
                           <form class="form-inline" action="brand" method="get">
-                              <button class="ancbutton" type="submit" style="background:lightgreen" ></button>
+                              <button  type="submit" style="background:lightgreen" ></button>
                           </form>
                       </a>
                     </div>
           <h2>Information</h2>
           <div class="sidebar__link">
             <i class="fa fa-archive"></i>
-            <a href="customer">Customer Details</a>
+                        <a href="customers">Customer Details
+                          <form class="form-inline" action="brand" method="get">
+                              <button  type="submit" style="background:lightgreen" ></button>
+                          </form>
+                      </a>
           </div>
           <div class="sidebar__link">
             <i class="fa fa-book" aria-hidden="true"></i>
-            <a href="report">View reports</a>
+                        <a href="adminPanel.jsp">View reports
+                          <form class="form-inline" action="brand" method="get">
+                              <button  type="submit" style="background:lightgreen" ></button>
+                          </form>
+                      </a>
           </div>
           <div class="sidebar__logout">
             <i class="fa fa-power-off"></i>
@@ -224,7 +237,6 @@
         </div>
       </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="js/adminPanel.js"></script>
 

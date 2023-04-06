@@ -13,6 +13,11 @@
             <jsp:include page="header.jsp"/>
         </header>
 
+        <% if (request.getParameter("ad")!=null){ %>
+               <script>
+                     alert("Your account was created successfully");
+               </script>
+        <%}%>
         <style>
             :root {
                 scroll-behavior: smooth;
@@ -41,8 +46,6 @@
                 }
             }
         </style>
-
-
         <script src="js/common.js"></script>
     </body>
 

@@ -16,71 +16,37 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/customer")
 public class CustomerManager {
 
-    public boolean registerCustomer(Customer customer) throws ClassNotFoundException, SQLException, IOException {
+    public String registerCustomer(Customer customer) throws ClassNotFoundException, SQLException, IOException {
         Connection connection = DbConnection.getConnection();
 
-  /*  try {
-        String query = "SELECT username FROM user WHERE username='" + username + "'";
-        Statement st = connection.createStatement();
-        ResultSet rs = st.executeQuery(query);
-        if (rs.next()) {
-            PrintWriter out = response.getWriter();
-            out.print("username");
-        } else {
-            query = "SELECT email FROM user WHERE email='" + email + "'";
-            st = connection.createStatement();
-            rs = st.executeQuery(query);
-            if (rs.next()) {
-                PrintWriter out = response.getWriter();
-                out.print("email");
-            } else {
-                query = "SELECT phone_no FROM user WHERE phone_no='" + phoneNo + "'";
-
-                st = connection.createStatement();
-                rs = st.executeQuery(query);
-                if (rs.next()) {
-                    PrintWriter out = response.getWriter();
-                    out.print("phone");
-                } else {
-
-                }
-                //Insert register data to database
-                query = "INSERT INTO user VALUES(?,?,?,?,?,?)";
-
-                PreparedStatement pst = this.connection.prepareStatement(query);
-                pst.setString(1, username);
-                pst.setString(2, fName);
-                pst.setString(3, lName);
-                pst.setString(4, email);
-                pst.setString(5, phoneNo);
-                pst.setString(6, password);
-                pst.executeUpdate();
-            }
-        }
-        } catch (Exception e) {
-            PrintWriter out = response.getWriter();
-            out.println(e);
-        }*/
-
-
-        String query="INSERT INTO customer (customerUniqueID,customerFirstName,customerLastName,customerDOB, customerEmail,password) VALUES(?,?,?,?,?,?)";
+        String query="SELECT * FROM customer WHERE customerEmail=?";
         PreparedStatement pst=connection.prepareStatement(query);
+        pst.setString(1, customer.getCustomerEmail());
+        ResultSet rs=pst.executeQuery();
+        if(rs.next()){
+            pst.close();
+            connection.close();
+            return "You already have an account with this email:" +customer.getCustomerEmail()+", try a different one";
+        }else {
 
-        pst.setString(1, customer.getCustomerUniqueId());
-        pst.setString(2, customer.getCustomerFirstName());
-        pst.setString(3, customer.getCustomerLastName());
-        pst.setString(4, customer.getCustomerDOB());
-        pst.setString(5, customer.getCustomerEmail());
-        pst.setString(6, customer.getPassword());
+            query = "INSERT INTO customer (customerUniqueID,customerFirstName,customerLastName,customerDOB, customerEmail,password) VALUES(?,?,?,?,?,?)";
+            pst = connection.prepareStatement(query);
+
+            pst.setString(1, customer.getCustomerUniqueId());
+            pst.setString(2, customer.getCustomerFirstName());
+            pst.setString(3, customer.getCustomerLastName());
+            pst.setString(4, customer.getCustomerDOB());
+            pst.setString(5, customer.getCustomerEmail());
+            pst.setString(6, customer.getPassword());
 
 
+            int result = pst.executeUpdate();
 
-        int result=pst.executeUpdate();
+            pst.close();
+            connection.close();
 
-        pst.close();
-        connection.close();
-
-        return result>0;
+            return "created";
+        }
     }
 
 

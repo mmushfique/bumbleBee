@@ -113,7 +113,7 @@ public class ProductController extends HttpServlet {
             product = productService.getSpecificProduct(productUniqueId);
             brandList=brandService.getAllBrands();
             categoryList = categoryService.getAllCategorys();
-            if (product==null)
+            if (product.getProductName()==null)
             {
                 message="The product "+productUniqueId+" is not found";
                 request.setAttribute("message", message);
@@ -147,7 +147,7 @@ public class ProductController extends HttpServlet {
             product = productService.searchProduct(productName);
             brandList=brandService.getAllBrands();
             categoryList = categoryService.getAllCategorys();
-            if (product==null)
+            if (product.getProductName()==null)
             {
                 message="The product "+productName+" is not found";
                 request.setAttribute("message", message);

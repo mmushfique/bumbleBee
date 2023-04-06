@@ -75,7 +75,7 @@ class BrandControllerTest {
         when(request.getParameter("type")).thenReturn("register");
         when(request.getParameter("brandName")).thenReturn("Brand 1");
         when(response.encodeRedirectURL("/bumbleBee/brand")).thenReturn("/bumbleBee/brand");
-        when(service.registerBrand(any(Brand.class))).thenReturn(true);
+        when(service.registerBrand(any(Brand.class))).thenReturn("created");
         Whitebox.setInternalState(brandController, "service", service);
 
         brandController.doPost(request, response);
@@ -88,12 +88,12 @@ class BrandControllerTest {
         when(request.getParameter("type")).thenReturn("register");
         when(request.getParameter("brandName")).thenReturn("Brand 1");
         when(request.getRequestDispatcher("manageBrand.jsp")).thenReturn(requestDispatcher);
-        when(service.registerBrand(any(Brand.class))).thenReturn(false);
+        when(service.registerBrand(any(Brand.class))).thenReturn("You already have this brand:Brand 1, try a different one");
         Whitebox.setInternalState(brandController, "service", service);
 
         brandController.doPost(request, response);
 
-        verify(request).setAttribute("message", "Failed to add the brand Brand 1");
+        verify(request).setAttribute("message", "You already have this brand:Brand 1, try a different one");
         verify(requestDispatcher).forward(request, response);
     }
 }

@@ -1,7 +1,9 @@
 <%@page import="java.io.PrintWriter"%>
 
-
-<!-- <%@page contentType="text/html" pageEncoding="UTF-8" %> -->
+<%response.setHeader("Cache-Control", "private, no-store, no-cache, must-revalidate");%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" isELIgnored="false" %>
+<%@ taglib prefix="tag" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,27 +24,24 @@
      <header id="header">
            <jsp:include page="header.jsp" />  
         </header>
-   
-
     <form class="login" id="loginForm" action="adminLogin" method="POST">
       <span id="switchSignup" class="bi bi-person-plus"></span>
       <span class="bi bi-person-check"></span>
       <h4>Sign In</h4>
       <div class="block">
-        <input class="form-control" type="email" id="emailcheck" name="adminEmail" placeholder="username" />
-        <input class="form-control" type="password" id="passwordcheck" name="password"
+        <input class="form-control" type="email" id="emailcheck" name="adminEmail" placeholder="username" required />
+        <input class="form-control" type="password" id="passwordcheck" name="password" required
                placeholder="Password" />
-        <small> </small>
       </div>
  <div class="btn-group w-100 ">
         <button class="btn btn-primary btn-sm" type="submit" id="loginBtn">Login</button>
         <a class="btn btn-danger btn-sm" id="forgotpassBtn"  href="#">Forgot Password?</a>
       </div>
-
+          <div style="color:red">${message}</div>
     </form>
 
 
-
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>

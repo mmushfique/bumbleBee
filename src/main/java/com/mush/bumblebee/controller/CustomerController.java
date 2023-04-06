@@ -48,31 +48,37 @@ public class CustomerController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String message = "";
-
         String customerUniqueID = UUID.randomUUID().toString();
         String customerFirstName = request.getParameter("customerFirstName");
         String customerLastName = request.getParameter("customerLastName");
         String customerDOB = request.getParameter("customerDOB");
         String customerEmail = request.getParameter("customerEmail");
         String password = request.getParameter("password");
-        password = PasswordEncryption.encryptPassword(password);
+        String repass = request.getParameter("repass");
 
-        Customer customer = new Customer(customerUniqueID, customerFirstName, customerLastName, customerDOB, customerEmail, password);
+        if (password.equals(repass)) {
 
-        try {
-            boolean result = service.signUp(customer);
-            if (result) {
-                message = "The product " + customerFirstName + " has been added successfully";
-                response.sendRedirect("/bumbleBee/index.jsp");
-            } else {
-                message = "Failed to add the product " + customerFirstName;
-                request.setAttribute("message", message);
-                RequestDispatcher rd = request.getRequestDispatcher("customerSignUp.jsp");
-                rd.forward(request, response);
+            Customer customer = new Customer(customerUniqueID, customerFirstName, customerLastName, customerDOB, customerEmail, password);
+
+            try {
+                String result = service.signUp(customer);
+                if (result.equals("created")) {
+                    response.sendRedirect("/bumbleBee/index.jsp?ad=" + "ad");
+                } else {
+                    message = result;
+                    request.setAttribute("message", message);
+                    RequestDispatcher rd = request.getRequestDispatcher("customerSignUp.jsp");
+                    rd.forward(request, response);
+                }
+            } catch (ClassNotFoundException | SQLException | IOException e) {
+                e.printStackTrace();
+                message = e.getMessage();
             }
-        } catch (ClassNotFoundException | SQLException | IOException e) {
-            e.printStackTrace();
-            message = e.getMessage();
+        }else{
+            message="Passwords do not match. Please try again.";
+            request.setAttribute("message", message);
+            RequestDispatcher rd = request.getRequestDispatcher("customerSignUp.jsp");
+            rd.forward(request, response);
         }
     }
 
