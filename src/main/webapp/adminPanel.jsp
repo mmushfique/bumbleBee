@@ -8,6 +8,10 @@
     String user = (String) httpSession.getAttribute("loggedUser");
     String role = (String) httpSession.getAttribute("role");
     if (role != null && role.equals("ADMIN")) {
+        Connection con;
+        con = DbConnection.getConnection();
+        Statement st = con.createStatement();
+        String query="";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,7 +72,7 @@
                 ResultSet r = st.executeQuery(query);
                 r.next();
                 %>
-                <span class="font-bold text-title"><%r.getInt(1)%></span>
+                <span class="font-bold text-title"><%=r.getInt(1)%></span>
               </div>
             </div>
 
@@ -81,15 +85,12 @@
                 r = st.executeQuery(query);
                 r.next();
                 %>
-                <span class="font-bold text-title"><%r.getInt(1)%></span>
+                <span class="font-bold text-title"><%=r.getInt(1)%></span>
               </div>
             </div>
 
             <div class="card">
-              <i 
-                class="fa fa-thumbs-up fa-2x text-green"
-                aria-hidden="true"
-              ></i>
+            <i class="fa fa-flag" aria-hidden="true" ></i>
               <div class="card_inner">
                 <p class="text-primary-p">Loans to be received</p>
                 <%
@@ -97,21 +98,23 @@
                 r = st.executeQuery(query);
                 r.next();
                 %>
-                <span class="font-bold text-title"><%r.getInt("total")%></span>
+                <span class="font-bold text-title"><%=r.getInt("total")%></span>
               </div>
             </div>
 
             <div class="card">
-                <i class="fa fa-flag" aria-hidden="true" ></i>
+               <i class="fa fa-thumbs-up fa-2x text-green"
+                              aria-hidden="true"
+                            ></i>
              
               <div class="card_inner">
-                <p class="text-primary-p">Count of producs having less stock(<10)</p>
+                <p class="text-primary-p">Count of producs having less stock(Less than 10)</p>
                 <%
                 query="SELECT COUNT(*) FROM bumblebee.product WHERE productQuantity<10";
                 r = st.executeQuery(query);
                 r.next();
                 %>
-                <span class="font-bold text-title"><%r.getInt(1)%></span>
+                <span class="font-bold text-title"><%=r.getInt(1)%></span>
               </div>
             </div>
           </div>
