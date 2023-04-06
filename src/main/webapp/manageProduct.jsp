@@ -60,7 +60,7 @@
               <h1>Manage Products</h1>
               <br>
               <div style="color:red">${message}</div>
-              =<br>
+              <br>
               <div class="search" style="display:flex;margin-left:300px ">
 
                 <!------Command to fetch brand and categories to create data------->

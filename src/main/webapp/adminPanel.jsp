@@ -108,7 +108,7 @@
                             ></i>
              
               <div class="card_inner">
-                <p class="text-primary-p">Count of producs having less stock(Less than 10)</p>
+                <p class="text-primary-p">Count of producs having less stock         (Less than 10)</p>
                 <%
                 query="SELECT COUNT(*) FROM bumblebee.product WHERE productQuantity<10";
                 r = st.executeQuery(query);
