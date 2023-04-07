@@ -6,12 +6,12 @@
 
   <groupId>com.mush.bumbleBee</groupId>
   <artifactId>bumbleBee</artifactId>
-  <version>0.0.2</version>
+  <version>0.0.9</version>
   <packaging>war</packaging>
 
   <name>Bumble Bee</name>
   <!-- FIXME change it to the project's website -->
-  <url>http://www.bumbleBee.com</url>
+  <url>http://localhost:8080/bumbleBee</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,12 +20,91 @@
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.31</version>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.7.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.7.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>3.12.4</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-reflect</artifactId>
+      <version>2.0.9</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>4.0.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+
   </dependencies>
 
   <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources/</directory>
+      </resource>
+    </resources>
     <finalName>bumbleBee</finalName>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
+        <plugin>
+          <groupId>org.apache.tomcat.maven</groupId>
+          <artifactId>tomcat7-maven-plugin</artifactId>
+          <version>2.2</version>
+          <executions>
+            <execution>
+              <id>start-tomcat</id>
+              <phase>pre-integration-test</phase>
+              <goals>
+                <goal>run</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>stop-tomcat</id>
+              <phase>post-integration-test</phase>
+              <goals>
+                <goal>shutdown</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <port>8080</port>
+            <path>/myapp</path>
+            <systemProperties>
+              <spring.profiles.active>test</spring.profiles.active>
+            </systemProperties>
+          </configuration>
+        </plugin>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
@@ -42,6 +121,16 @@
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
+          <configuration>
+            <skipTests>false</skipTests>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>test</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <artifactId>maven-war-plugin</artifactId>
